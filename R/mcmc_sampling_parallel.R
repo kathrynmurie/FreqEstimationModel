@@ -1,12 +1,19 @@
 #'@title MCMC
 #'@name mcmc_sampling_parallel
 #'@description Function to implement mcmc sampler chains in parallel, followed retrospective posterior calculations
+#'@param processed_data_list List of processed data
+#'@param moi_list List of MOI settings
+#'@param frequency_list List of frequency settings
+#'@param mcmc_variable_list List of MCMC settings
+#'@param cores_max Maximum number of cores to register with doMC
+#'@param seed Integer seed for the per-chain RNG streams built by RNGseq().
 #'@export
 mcmc_sampling_parallel <- function(processed_data_list,    # List of processed data
                                    moi_list,
                                    frequency_list,
                                    mcmc_variable_list,
-                                   cores_max)
+                                   cores_max,
+                                   seed = 1234352)
 
 {
   #==============================================================
@@ -99,7 +106,7 @@ mcmc_sampling_parallel <- function(processed_data_list,    # List of processed d
 
   #==================================================================================================================================
   registerDoMC(cores = min(mcmc_variable_list$no_mcmc_chains, cores_max)) # Register number of cores
-  rng <- RNGseq(mcmc_variable_list$no_mcmc_chains, 1234352) # Pre-specify seed per chain
+  rng <- RNGseq(mcmc_variable_list$no_mcmc_chains, seed) # Pre-specify seed per chain
 
   # Initialise chains
   parallel_return <- foreach(chain = 1:mcmc_variable_list$no_mcmc_chains) %dopar% {

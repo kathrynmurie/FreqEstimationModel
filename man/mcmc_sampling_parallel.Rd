@@ -9,8 +9,22 @@ mcmc_sampling_parallel(
   moi_list,
   frequency_list,
   mcmc_variable_list,
-  cores_max
+  cores_max,
+  seed = 1234352
 )
+}
+\arguments{
+\item{processed_data_list}{List of processed data}
+
+\item{moi_list}{List of MOI settings}
+
+\item{frequency_list}{List of frequency settings}
+
+\item{mcmc_variable_list}{List of MCMC settings}
+
+\item{cores_max}{Maximum number of cores to register with doMC}
+
+\item{seed}{Integer seed for the per-chain RNG streams built by RNGseq().}
 }
 \description{
 Function to implement mcmc sampler chains in parallel, followed retrospective posterior calculations
